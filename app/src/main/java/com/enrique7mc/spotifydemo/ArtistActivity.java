@@ -1,0 +1,90 @@
+package com.enrique7mc.spotifydemo;
+
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListView;
+
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import kaaes.spotify.webapi.android.SpotifyApi;
+import kaaes.spotify.webapi.android.SpotifyService;
+import kaaes.spotify.webapi.android.models.Album;
+import kaaes.spotify.webapi.android.models.Artist;
+import kaaes.spotify.webapi.android.models.Pager;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
+public class ArtistActivity extends AppCompatActivity {
+
+    @BindView(R.id.artistImageView) ImageView artistImageView;
+    @BindView(R.id.albumsListView) ListView albumsListView;
+
+    private Artist artist;
+    private String token;
+    SpotifyService spotify;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_artist);
+        ButterKnife.bind(this);
+
+        Intent intent = getIntent();
+        artist = intent.getParcelableExtra("artist");
+        token = intent.getStringExtra("token");
+
+        setTitle(artist.name);
+        SpotifyApi api = new SpotifyApi();
+        api.setAccessToken(token);
+        spotify = api.getService();
+
+        Picasso.with(this)
+                .load(artist.images.get(0).url)
+                .placeholder(R.drawable.placeholder)
+                .into(artistImageView);
+        albumsListView.setEmptyView(findViewById(android.R.id.empty));
+
+        getAlbums(artist.id);
+    }
+
+    private void getAlbums(String artistId) {
+        spotify.getArtistAlbums(artistId, new Callback<Pager<Album>>() {
+            @Override
+            public void success(Pager<Album> albumPager, Response response) {
+                if(albumPager.items.size() > 0) {
+                    AlbumsAdapter adapter = new AlbumsAdapter(getApplicationContext(), albumPager.items);
+                    albumsListView.setAdapter(adapter);
+                    albumsListView.setOnItemClickListener(onItemClickListener);
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.e("ArtistActivity", error.getMessage());
+            }
+        });
+    }
+
+    AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            Intent intent = new Intent(getApplicationContext(), AlbumActivity.class);
+            intent.putExtra("album", (Album)parent.getItemAtPosition(position));
+            intent.putExtra("token", token);
+            startActivity(intent);
+        }
+    };
+}
