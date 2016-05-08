@@ -49,9 +49,9 @@ public class AlbumActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_album);
         ButterKnife.bind(this);
 
-        Intent intent = getIntent();
-        album = intent.getParcelableExtra("album");
-        token = intent.getStringExtra("token");
+        DemoApplication application = (DemoApplication) getApplicationContext();
+        album = application.getCurrentAlbum();
+        token = application.getToken();
 
         setTitle(album.name);
         SpotifyApi api = new SpotifyApi();

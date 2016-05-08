@@ -78,9 +78,10 @@ public class ArtistActivity extends AppCompatActivity {
     AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            DemoApplication application = (DemoApplication) getApplicationContext();
+            Album album = (Album)parent.getItemAtPosition(position);
+            application.setCurrentAlbum(album);
             Intent intent = new Intent(getApplicationContext(), AlbumActivity.class);
-            intent.putExtra("album", (Album)parent.getItemAtPosition(position));
-            intent.putExtra("token", token);
             startActivity(intent);
         }
     };
