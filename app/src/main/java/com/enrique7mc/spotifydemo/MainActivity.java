@@ -1,30 +1,21 @@
 package com.enrique7mc.spotifydemo;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
+import com.enrique7mc.spotifydemo.adapters.ArtistsAdapter;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
-import com.spotify.sdk.android.player.Config;
-import com.spotify.sdk.android.player.Spotify;
-import com.spotify.sdk.android.player.ConnectionStateCallback;
-import com.spotify.sdk.android.player.Player;
-import com.spotify.sdk.android.player.PlayerNotificationCallback;
-import com.spotify.sdk.android.player.PlayerState;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -75,6 +66,15 @@ public class MainActivity extends Activity {
     public void search(View v) {
         String artist = searchText.getText().toString();
         searchArtist(artist);
+        hideKeyboard();
+    }
+
+    private void hideKeyboard () {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
     private void searchArtist(final String artist) {
@@ -104,9 +104,12 @@ public class MainActivity extends Activity {
     AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            DemoApplication application = (DemoApplication) getApplicationContext();
+            Artist artist = (Artist)parent.getItemAtPosition(position);
+            application.setCurrentArtist(artist);
+            application.setToken(TOKEN);
+
             Intent intent = new Intent(getApplicationContext(), ArtistActivity.class);
-            intent.putExtra("artist", (Artist)parent.getItemAtPosition(position));
-            intent.putExtra("token", TOKEN);
             startActivity(intent);
         }
     };

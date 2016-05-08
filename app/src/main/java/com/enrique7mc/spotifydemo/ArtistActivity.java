@@ -6,15 +6,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.enrique7mc.spotifydemo.adapters.AlbumsAdapter;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,9 +38,9 @@ public class ArtistActivity extends AppCompatActivity {
         setContentView(R.layout.activity_artist);
         ButterKnife.bind(this);
 
-        Intent intent = getIntent();
-        artist = intent.getParcelableExtra("artist");
-        token = intent.getStringExtra("token");
+        DemoApplication application = (DemoApplication) getApplicationContext();
+        artist = application.getCurrentArtist();
+        token = application.getToken();
 
         setTitle(artist.name);
         SpotifyApi api = new SpotifyApi();
@@ -53,7 +49,8 @@ public class ArtistActivity extends AppCompatActivity {
 
         Picasso.with(this)
                 .load(artist.images.get(0).url)
-                .placeholder(R.drawable.placeholder)
+                .resize(400, 400)
+                .placeholder(R.drawable.artist_placeholder)
                 .into(artistImageView);
         albumsListView.setEmptyView(findViewById(android.R.id.empty));
 
