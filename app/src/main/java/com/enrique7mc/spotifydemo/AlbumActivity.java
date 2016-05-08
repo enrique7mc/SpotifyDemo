@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.enrique7mc.spotifydemo.adapters.TracksAdapter;
 import com.spotify.sdk.android.player.Config;
 import com.spotify.sdk.android.player.ConnectionStateCallback;
 import com.spotify.sdk.android.player.Player;
@@ -59,7 +60,7 @@ public class AlbumActivity extends AppCompatActivity implements
 
         Picasso.with(this)
                 .load(album.images.get(0).url)
-                .placeholder(R.drawable.placeholder)
+                .placeholder(R.drawable.album_placeholder)
                 .into(albumImageView);
         albumsListView.setEmptyView(findViewById(android.R.id.empty));
 
