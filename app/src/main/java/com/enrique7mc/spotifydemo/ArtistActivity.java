@@ -25,7 +25,7 @@ import retrofit.client.Response;
 
 public class ArtistActivity extends AppCompatActivity {
 
-    @BindView(R.id.artistImageView) ImageView artistImageView;
+    // @BindView(R.id.artistImageView) ImageView artistImageView;
     @BindView(R.id.albumsListView) ListView albumsListView;
 
     private Artist artist;
@@ -47,6 +47,9 @@ public class ArtistActivity extends AppCompatActivity {
         api.setAccessToken(token);
         spotify = api.getService();
 
+        View header = getLayoutInflater().inflate(R.layout.list_header, null);
+        ImageView artistImageView = (ImageView) header.findViewById(R.id.headerImageView);
+        albumsListView.addHeaderView(header);
         Picasso.with(this)
                 .load(artist.images.get(0).url)
                 .resize(400, 400)

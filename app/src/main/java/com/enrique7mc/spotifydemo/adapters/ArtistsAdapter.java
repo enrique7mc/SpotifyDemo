@@ -30,7 +30,7 @@ public class ArtistsAdapter extends ArrayAdapter<Artist> {
         Artist artist = getItem(position);
 
         if(convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_list, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_list_artist, parent, false);
         }
 
         ImageView image = (ImageView) convertView.findViewById(R.id.imageView);
