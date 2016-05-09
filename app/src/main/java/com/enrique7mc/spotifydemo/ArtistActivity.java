@@ -24,8 +24,6 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class ArtistActivity extends AppCompatActivity {
-
-    // @BindView(R.id.artistImageView) ImageView artistImageView;
     @BindView(R.id.albumsListView) ListView albumsListView;
 
     private Artist artist;

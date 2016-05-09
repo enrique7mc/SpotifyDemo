@@ -34,7 +34,6 @@ public class AlbumActivity extends AppCompatActivity implements
     private static final String CLIENT_ID = "04530d39932e4843990ad1f546905e23";
     public static final String ALBUM_ACTIVITY = "AlbumActivity";
 
-    @BindView(R.id.albumImageView) ImageView albumImageView;
     @BindView(R.id.albumsListView) ListView albumsListView;
 
     private Album album;
@@ -57,6 +56,9 @@ public class AlbumActivity extends AppCompatActivity implements
         api.setAccessToken(token);
         spotify = api.getService();
 
+        View header = getLayoutInflater().inflate(R.layout.list_header, null);
+        ImageView albumImageView = (ImageView) header.findViewById(R.id.headerImageView);
+        albumsListView.addHeaderView(header);
         Picasso.with(this)
                 .load(album.images.get(0).url)
                 .placeholder(R.drawable.album_placeholder)
