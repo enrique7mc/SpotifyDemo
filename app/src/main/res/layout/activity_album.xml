@@ -5,23 +5,38 @@
     android:layout_height="match_parent"
     tools:context=".AlbumActivity">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/albumImageView"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/albumsListView"
-        android:layout_below="@+id/albumImageView"
-        android:layout_centerHorizontal="true" />
+        android:layout_above="@+id/linearLayout2"
+        android:layout_alignParentStart="true" />
 
     <TextView android:id="@android:id/empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
         android:text="No Results" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/linearLayout2">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Current Track"
+            android:id="@+id/trackTextView" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Play"
+            android:id="@+id/playButton" />
+    </LinearLayout>
+
 </RelativeLayout>
