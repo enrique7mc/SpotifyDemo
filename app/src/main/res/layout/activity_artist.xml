@@ -5,18 +5,10 @@
     android:layout_height="match_parent"
     tools:context="com.enrique7mc.spotifydemo.ArtistActivity">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/artistImageView"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/albumsListView"
-        android:layout_below="@+id/artistImageView"
         android:layout_centerHorizontal="true" />
 
     <TextView android:id="@android:id/empty"
