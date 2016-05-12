@@ -5,8 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.enrique7mc.spotifydemo.adapters.TracksAdapter;
 import com.spotify.sdk.android.player.Config;
@@ -35,7 +37,10 @@ public class AlbumActivity extends AppCompatActivity implements
     public static final String ALBUM_ACTIVITY = "AlbumActivity";
 
     @BindView(R.id.albumsListView) ListView albumsListView;
+    @BindView(R.id.trackTextView) TextView trackTextView;
+    @BindView(R.id.playButton) Button playButton;
 
+    private boolean isPlaying;
     private Album album;
     private String token;
     private SpotifyService spotify;
@@ -111,6 +116,8 @@ public class AlbumActivity extends AppCompatActivity implements
             Track track = (Track) parent.getItemAtPosition(position);
             Log.d(ALBUM_ACTIVITY, track.name + " " + track.id);
             mPlayer.play("spotify:track:" + track.id);
+            trackTextView.setText(track.name);
+            playButton.setText("Pause");
         }
     };
 
